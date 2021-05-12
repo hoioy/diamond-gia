@@ -70,41 +70,11 @@ INSERT INTO `role_menu` VALUES
 ('f12d9eae0fec46e4816b6baf00ee6ef1', '5b66ecf45d634159a08468898b1b3217');
 COMMIT;
 
--- ----------------------------
---  Records of `oauth_client_details`
--- ----------------------------
-BEGIN;
-INSERT INTO `oauth_client_details` VALUES
-('tdfOauth2SSO1v2', '', '$2a$10$CkHnbLTFbc20eSLX55hlp.EPzgf.yJMJZ145A/MBZgq/tkr.EalMu', 'all', 'authorization_code', 'http://localhost:8081/login', '', 7200, 72000, '{\"customSubName\":\"tdfOauth2SSO1v2\",\"icon\":\"http://tech.hoioy.com/upload/c07dc45d79084393bd62a2f899e20079.png\",\"customName\":\"TDF-oauth-client测试客户端1\"}', 'user', 'TDF-oauth-cclient测试客户端1'),
-('tdfOauth2SSO2v2', '', '$2a$10$CkHnbLTFbc20eSLX55hlp.EPzgf.yJMJZ145A/MBZgq/tkr.EalMu', 'all', 'authorization_code', 'http://localhost:8082/login', '', 7200, 72000, '{\"customSubName\":\"tdfOauth2SSO2v2\",\"icon\":\"http://tech.hoioy.com/upload/c07dc45d79084393bd62a2f899e20079.png\",\"customName\":\"TDF-oauth-client测试客户端2\"}', 'user', 'TDF-oauth-cclient测试客户端2'),
-('tdfOauth2SSO213', '', '$2a$10$DKTbSeyYO0De4e1wOveacemuz9s8uBBD8f.CXry50kY26kqeLbjC.', 'all', 'authorization_code', 'http://localhost:8082/login/oauth2/code/tdf', '', 7200, 72000, '{\"customSubName\":\"tdfOauth2SSO2v2\",\"icon\":\"http://tech.hoioy.com/upload/d793cbe3e60a4b199abbd1cf5f11a8fc.png\",\"customName\":\"TDF-oauth-client测试客户端2\"}', 'user', 'TDF-oauth-cclient测试客户端2'),
-('dev', '', '$2a$10$y4fvvmetamjVUIVBDVzvI.hYoWnWbwaQ9LDgTo1cW5.YWp90mOdXK', 'all', 'authorization_code', 'http://localhost:7777/,http://localhost:7777/login,http://localhost:7777/**,http://10.0.50.78:7777/login,http://192.168.70.42:8080/login', '', 7200, 72000, '{"customSubName":"","icon":"","customName":"开源社区"}', '开源社区', '开源社区'),
-('cloudoauth2samplejwt', '', '$2a$10$cWaq9fBJ64HFFhjAQcRDQeg4SOfvpTDrfGad3CCkqAiqxjMMx8XIO', 'all', 'authorization_code', 'http://localhost:8080/login/oauth2/code/tdf', '', 7200, 72000, '{"customSubName":"cloud-oauth-sample-jwt","icon":"http://tech.hoioy.com/upload/d793cbe3e60a4b199abbd1cf5f11a8fc.png","customName":"cloud-oauth-sample-jwt"}', 'user', 'cloudoauth2samplejwt');
-COMMIT;
 
--- ----------------------------
---  Records of `oauth_client_details`
--- ----------------------------
-BEGIN;
-INSERT INTO `oauth_client_details` (client_id , resource_ids , client_secret , scope , authorized_grant_types , web_server_redirect_uri , authorities , access_token_validity , refresh_token_validity , additional_information , autoapprove, custom_name)  VALUES
-('tdf-cloud-ui-vue', '', '$2a$10$QN4YOVP0W3kOEcnSoIU4.O70rkaJt6LZZKolMglVO6XTeZzhkktne', 'user_info', 'authorization_code,password,refresh_token',
-    'http://localhost:8801/ssologin,http://192.168.70.40:8801/ssologin,http://192.168.70.44:8801/ssologin',
-    '', '7200', '72000', '{\"customSubName\":\"TDF Cloud微服务大前端，基于vue技术栈\",\"icon\":\"http://tech.hoioy.com/ui/api/upload/80d22ff4d709415b8ffadf0843af8c5e_-_image.png\",\"customName\":\"TDF Cloud前端\"}', 'true','TDF Cloud前端');
-COMMIT;
+-- GIA Common中的表
+INSERT INTO `oauth_client_details`(`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`, `custom_name`, `id`, `created_by`, `created_date`, `flag`, `modified_by`, `modified_date`, `remark`) VALUES ('diamond', '', '$2a$10$naRXogfHh50C.Y5ndb4dmOvZUB/gExqoQFsuaWtJQ5yRRxFH5z2Jq', 'app1', 'authorization_code', 'http://192.168.70.42:8080/login,http://localhost:7779/login', '', 7200, 72000, '{"customSubName":"diamond","icon":"http://www.hoioy.com/upload/2021/05/dimaondLogo100-3f4d7864c22f44559f10885d12d855a5.png","customName":"Diamond"}', 'false', 'diamond', 'diamond', NULL, NULL, 1, NULL, NULL, NULL);
+INSERT INTO `oauth_client_details`(`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`, `custom_name`, `id`, `created_by`, `created_date`, `flag`, `modified_by`, `modified_date`, `remark`) VALUES ('diamondcloud', '', '$2a$10$naRXogfHh50C.Y5ndb4dmOvZUB/gExqoQFsuaWtJQ5yRRxFH5z2Jq', 'app1', 'authorization_code', 'http://192.168.70.42:8080/login,http://localhost:7779/login', '', 7200, 72000, '{"customSubName":"diamondcloud","icon":"http://www.hoioy.com/upload/2021/05/dimaondLogo100-3f4d7864c22f44559f10885d12d855a5.png","customName":"Diamond Cloud"}', 'false', 'diamondcloud', 'diamondcloud', NULL, NULL, 1, NULL, NULL, NULL);
 
--- ----------------------------
---  Records of `role_client`
--- ----------------------------
-BEGIN;
-INSERT INTO `role_client` VALUES
-('tdf-cloud-ui-vue', '5b66ecf45d634159a08468898b1b3217'),
-('tdf-cloud-ui-vue', 'cc377e1b32e74e71953ddcd595d5498b'),
-('tdfOauth2SSO1v2', '5b66ecf45d634159a08468898b1b3217'),
-('tdfOauth2SSO2v2', '5b66ecf45d634159a08468898b1b3217'),
-('dev', '5b66ecf45d634159a08468898b1b3217'),
-('tdfOauth2SSO213', '5b66ecf45d634159a08468898b1b3217'),
-('cloudoauth2samplejwt', '5b66ecf45d634159a08468898b1b3217'),
-('tdfOauth2SSO1v2', 'cc377e1b32e74e71953ddcd595d5498b'),
-('tdfOauth2SSO2v2', 'cc377e1b32e74e71953ddcd595d5498b');
-COMMIT;
 
+INSERT INTO `role_client`(`client_id`, `id`, `role_name`) VALUES ('diamond', 'diamondROLE_ADMIN', 'ROLE_ADMIN');
+INSERT INTO `role_client`(`client_id`, `id`, `role_name`) VALUES ('diamondcloud', 'diamondcloudROLE_ADMIN', 'ROLE_ADMIN');

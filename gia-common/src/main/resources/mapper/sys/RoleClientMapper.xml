@@ -62,32 +62,32 @@
               ocd.flag=1
 
         <if test="oauthClientDetailsWithRoleDTO.createdBy != null and oauthClientDetailsWithRoleDTO.createdBy != ''">
-            AND ocd.created_by LIKE "%"#{oauthClientDetailsWithRoleDTO.createdBy}"%"
+            AND ocd.created_by LIKE concat(concat('%', #{oauthClientDetailsWithRoleDTO.createdBy}), '%')
         </if>
         <if test="oauthClientDetailsWithRoleDTO.createdDate != null ">
             AND ocd.created_date = #{oauthClientDetailsWithRoleDTO.createdDate}
         </if>
         <if test="oauthClientDetailsWithRoleDTO.modifiedBy != null and oauthClientDetailsWithRoleDTO.modifiedBy != ''">
-            AND ocd.modified_by LIKE "%"#{oauthClientDetailsWithRoleDTO.modifiedBy}"%"
+            AND ocd.modified_by LIKE concat(concat('%', #{oauthClientDetailsWithRoleDTO.modifiedBy}), '%')
         </if>
         <if test="oauthClientDetailsWithRoleDTO.modifiedDate != null ">
             AND ocd.modified_date = #{oauthClientDetailsWithRoleDTO.modifiedDate}
         </if>
         <if test="oauthClientDetailsWithRoleDTO.remark != null and oauthClientDetailsWithRoleDTO.remark != ''">
-            AND ocd.remark LIKE "%"#{oauthClientDetailsWithRoleDTO.remark}"%"
+            AND ocd.remark LIKE concat(concat('%', #{oauthClientDetailsWithRoleDTO.remark}), '%')
         </if>
 
         <if test="oauthClientDetailsWithRoleDTO.clientId != null and oauthClientDetailsWithRoleDTO.clientId != ''">
-            AND ocd.client_id LIKE "%"#{oauthClientDetailsWithRoleDTO.clientId}"%"
+            AND ocd.client_id LIKE concat(concat('%', #{oauthClientDetailsWithRoleDTO.clientId}), '%')
         </if>
         <if test="oauthClientDetailsWithRoleDTO.authorizedGrantTypes != null and oauthClientDetailsWithRoleDTO.authorizedGrantTypes != ''">
             AND ocd.authorized_grant_types = #{oauthClientDetailsWithRoleDTO.authorizedGrantTypes}
         </if>
         <if test="oauthClientDetailsWithRoleDTO.customName != null and oauthClientDetailsWithRoleDTO.customName != ''">
-            AND ocd.custom_name LIKE "%"#{oauthClientDetailsWithRoleDTO.customName}"%"
+            AND ocd.custom_name LIKE concat(concat('%', #{oauthClientDetailsWithRoleDTO.customName}), '%')
         </if>
         <if test="oauthClientDetailsWithRoleDTO.roleName != null and oauthClientDetailsWithRoleDTO.roleName != ''">
-            AND rc.role_name LIKE "%"#{oauthClientDetailsWithRoleDTO.roleName}"%"
+            AND rc.role_name LIKE concat(concat('%', #{oauthClientDetailsWithRoleDTO.roleName}), '%')
         </if>
     </select>
 </mapper>

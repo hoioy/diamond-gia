@@ -23,7 +23,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   cache:
-    type: redis
+    type: caffeine
 
 logging:
   level:
@@ -39,7 +39,7 @@ diamond:
     admin-name: ""
     admin-password: ""
     base-dn: ""
-  db:  #当tdf.provider中包含DB时，DB的配置
+  db:  #当diamond.provider中包含DB时，DB的配置
     driverClassName: "" #"com.mysql.jdbc.Driver"
     dbUrl: "" #"jdbc:mysql://localhost:3306/wwj"
     username: "" #"root"
@@ -47,7 +47,7 @@ diamond:
     tableName: "" #"other_user_info" #用户表名称
     nameField: "" #"login_name"
     credentialField: "" #"password"
-  http: #当tdf.provider中包含HTTP时，HTTP接口的配置
+  http: #当diamond.provider中包含HTTP时，HTTP接口的配置
     url: "" #"http://localhost:8080"
     nameField: "" #"login_name"
     credentialField: "" #"password"

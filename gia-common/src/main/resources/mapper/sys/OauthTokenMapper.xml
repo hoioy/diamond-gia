@@ -43,23 +43,23 @@
         where
         flag=1
         <if test="oauthToken.createdBy != null and oauthToken.createdBy != ''">
-            AND created_by LIKE "%"#{oauthToken.createdBy}"%"
+            AND created_by LIKE concat(concat('%', #{oauthToken.createdBy}), '%')
         </if>
         <if test="oauthToken.createdDate != null ">
             AND created_date = #{oauthToken.createdDate}
         </if>
         <if test="oauthToken.modifiedBy != null and oauthToken.modifiedBy != ''">
-            AND modified_by LIKE "%"#{oauthToken.modifiedBy}"%"
+            AND modified_by LIKE concat(concat('%', #{oauthToken.modifiedBy}), '%')
         </if>
         <if test="oauthToken.modifiedDate != null ">
             AND modified_date = #{oauthToken.modifiedDate}
         </if>
         <if test="oauthToken.remark != null and oauthToken.remark != ''">
-            AND remark LIKE "%"#{oauthToken.remark}"%"
+            AND remark LIKE concat(concat('%', #{oauthToken.remark}), '%')
         </if>
 
         <if test="oauthToken.sub != null and oauthToken.sub != ''">
-            AND sub LIKE "%"#{oauthToken.sub}"%"
+            AND sub LIKE concat(concat('%', #{oauthToken.sub}), '%')
         </if>
         <if test="oauthToken.clientId != null and oauthToken.clientId != ''">
             AND client_id = #{oauthToken.clientId}

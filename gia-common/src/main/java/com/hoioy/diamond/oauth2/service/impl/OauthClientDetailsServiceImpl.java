@@ -1,7 +1,10 @@
 package com.hoioy.diamond.oauth2.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hoioy.diamond.common.base.BaseServiceImpl;
 import com.hoioy.diamond.common.dto.PageDTO;
 import com.hoioy.diamond.common.exception.BaseException;
@@ -15,9 +18,6 @@ import com.hoioy.diamond.oauth2.dto.RoleClientJoinDTO;
 import com.hoioy.diamond.oauth2.mapper.OauthClientDetailsMapper;
 import com.hoioy.diamond.oauth2.service.IOauthClientDetailsService;
 import com.hoioy.diamond.oauth2.service.IRoleClientService;
-import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -45,7 +45,7 @@ public class OauthClientDetailsServiceImpl extends BaseServiceImpl<OauthClientDe
     @Override
     public PageDTO getPage(PageDTO pageDTO) throws BaseException {
         Page page = CommonMybatisPageUtil.getInstance().pageDTOtoPage(pageDTO);
-        OauthClientDetails course =getDomainFilterFromPageDTO(pageDTO);
+        OauthClientDetails course = getDomainFilterFromPageDTO(pageDTO);
         IPage<OauthClientDetails> courseIPage = iBaseRepository.selectPage(page, course);
         PageDTO resultPage = CommonMybatisPageUtil.getInstance().iPageToPageDTO(courseIPage, OauthClientDetailsDTO.class);
         return resultPage;
@@ -83,13 +83,17 @@ public class OauthClientDetailsServiceImpl extends BaseServiceImpl<OauthClientDe
 
     @Override
     public List<OauthClientDetailsDTO> findAll() {
-        List<OauthClientDetails>  list = mybatisPlusServiceImpl.list();
+        List<OauthClientDetails> list = mybatisPlusServiceImpl.list();
         return domainListToDTOList(list);
     }
 
     @Override
     public OauthClientDetailsDTO findByClientId(String clientId) {
-        return domainToDTO(iBaseRepository.findByClientId(clientId));
+        OauthClientDetails domain = iBaseRepository.findByClientId(clientId);
+        if (domain == null) {
+            return null;
+        }
+        return domainToDTO(domain);
     }
 
     @Override

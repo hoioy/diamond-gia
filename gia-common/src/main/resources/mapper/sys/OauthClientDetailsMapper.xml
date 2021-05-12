@@ -33,9 +33,7 @@
         id,flag,created_by, created_date, modified_by, modified_date, remark, 
         client_id, resource_ids, client_secret,scope,
         authorized_grant_types, web_server_redirect_uri, authorities,access_token_validity,
-        refresh_token_validity, additional_information, autoapprove,custom_name,
-
-        client_id, role_name
+        refresh_token_validity, additional_information, autoapprove,custom_name
     </sql>
 
     <select id="selectPage" resultType="com.hoioy.diamond.oauth2.domain.OauthClientDetails">
@@ -46,29 +44,29 @@
         where
         flag=1
         <if test="oauthClientDetails.createdBy != null and oauthClientDetails.createdBy != ''">
-            AND created_by LIKE "%"#{oauthClientDetails.createdBy}"%"
+            AND created_by LIKE concat(concat('%', #{oauthClientDetails.createdBy}), '%')
         </if>
         <if test="oauthClientDetails.createdDate != null ">
             AND created_date = #{oauthClientDetails.createdDate}
         </if>
         <if test="oauthClientDetails.modifiedBy != null and oauthClientDetails.modifiedBy != ''">
-            AND modified_by LIKE "%"#{oauthClientDetails.modifiedBy}"%"
+            AND modified_by LIKE concat(concat('%', #{oauthClientDetails.modifiedBy}), '%')
         </if>
         <if test="oauthClientDetails.modifiedDate != null ">
             AND modified_date = #{oauthClientDetails.modifiedDate}
         </if>
         <if test="oauthClientDetails.remark != null and oauthClientDetails.remark != ''">
-            AND remark LIKE "%"#{oauthClientDetails.remark}"%"
+            AND remark LIKE concat(concat('%', #{oauthClientDetails.remark}), '%')
         </if>
 
         <if test="oauthClientDetails.clientId != null and oauthClientDetails.clientId != ''">
-            AND client_id LIKE "%"#{oauthClientDetails.clientId}"%"
+            AND client_id LIKE concat(concat('%', #{oauthClientDetails.clientId}), '%')
         </if>
         <if test="oauthClientDetails.authorizedGrantTypes != null and oauthClientDetails.authorizedGrantTypes != ''">
             AND authorized_grant_types = #{oauthClientDetails.authorizedGrantTypes}
         </if>
         <if test="oauthClientDetails.customName != null and oauthClientDetails.customName != ''">
-            AND custom_name LIKE "%"#{oauthClientDetails.customName}"%"
+            AND custom_name LIKE concat(concat('%', #{oauthClientDetails.customName}), '%')
         </if>
     </select>
 

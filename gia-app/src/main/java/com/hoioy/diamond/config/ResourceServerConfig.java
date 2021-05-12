@@ -13,13 +13,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
 
         http.requestMatchers().antMatchers( "/exit","/user/**","/me")
+                .antMatchers("/h2-console/**")
                 .and()
                 .authorizeRequests()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated();
 
-        // TODO  http.csrf().ignoringAntMatchers("/actuator/**"); 可以被tdf-cloud-admin-server监控，需要禁用csrf .post 类型请求csrf临时禁用http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+        // TODO  http.csrf().ignoringAntMatchers("/actuator/**"); 可以被diamond-cloud-admin-server监控，需要禁用csrf .post 类型请求csrf临时禁用http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         http.csrf().disable();
 
+        http.headers().frameOptions().sameOrigin();//为了展示h2-console
         http.cors();
     }
 
