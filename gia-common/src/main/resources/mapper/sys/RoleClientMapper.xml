@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hoioy.diamond.oauth2.mapper.RoleClientMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hoioy.diamond.oauth2.domain.RoleClient">
+        <result column="id" property="id"/>
+        <result column="client_id" property="clientId"/>
+        <result column="role_name" property="roleName"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, client_id, role_name
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Page_Column_List">
+        ocd.id,
+        ocd.flag,
+        ocd.created_by,
+        ocd.created_date,
+        ocd.modified_by,
+        ocd.modified_date,
+        ocd.remark,
+
+        ocd.client_id,
+        ocd.resource_ids,
+        ocd.client_secret,
+        ocd.scope,
+        ocd.authorized_grant_types,
+        ocd.web_server_redirect_uri,
+        ocd.authorities,
+        ocd.access_token_validity,
+        ocd.refresh_token_validity,
+        ocd.additional_information,
+        ocd.autoapprove,
+        ocd.custom_name,
+        rc.role_name
+    </sql>
+
+    <select id="selectPage" resultType="com.hoioy.diamond.oauth2.domain.RoleClient">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        role_client
+        <if test="roleClient.clientId != null and roleClient.clientId != ''">
+            AND client_id = #{roleClient.clientId}
+        </if>
+        <if test="roleClient.roleName != null and roleClient.roleName != ''">
+            AND role_name = #{roleClient.roleName}
+        </if>
+    </select>
+
+    <select id="findOauthClientDetailsWithRole" resultType="java.util.Map">
+        select
+        <include refid="Page_Column_List"/>
+        from
+        oauth_client_details ocd
+        LEFT JOIN   role_client rc ON ocd.client_id = rc.client_id
+        where 
+              ocd.flag=1
+
+        <if test="oauthClientDetailsWithRoleDTO.createdBy != null and oauthClientDetailsWithRoleDTO.createdBy != ''">
+            AND ocd.created_by LIKE "%"#{oauthClientDetailsWithRoleDTO.createdBy}"%"
+        </if>
+        <if test="oauthClientDetailsWithRoleDTO.createdDate != null ">
+            AND ocd.created_date = #{oauthClientDetailsWithRoleDTO.createdDate}
+        </if>
+        <if test="oauthClientDetailsWithRoleDTO.modifiedBy != null and oauthClientDetailsWithRoleDTO.modifiedBy != ''">
+            AND ocd.modified_by LIKE "%"#{oauthClientDetailsWithRoleDTO.modifiedBy}"%"
+        </if>
+        <if test="oauthClientDetailsWithRoleDTO.modifiedDate != null ">
+            AND ocd.modified_date = #{oauthClientDetailsWithRoleDTO.modifiedDate}
+        </if>
+        <if test="oauthClientDetailsWithRoleDTO.remark != null and oauthClientDetailsWithRoleDTO.remark != ''">
+            AND ocd.remark LIKE "%"#{oauthClientDetailsWithRoleDTO.remark}"%"
+        </if>
+
+        <if test="oauthClientDetailsWithRoleDTO.clientId != null and oauthClientDetailsWithRoleDTO.clientId != ''">
+            AND ocd.client_id LIKE "%"#{oauthClientDetailsWithRoleDTO.clientId}"%"
+        </if>
+        <if test="oauthClientDetailsWithRoleDTO.authorizedGrantTypes != null and oauthClientDetailsWithRoleDTO.authorizedGrantTypes != ''">
+            AND ocd.authorized_grant_types = #{oauthClientDetailsWithRoleDTO.authorizedGrantTypes}
+        </if>
+        <if test="oauthClientDetailsWithRoleDTO.customName != null and oauthClientDetailsWithRoleDTO.customName != ''">
+            AND ocd.custom_name LIKE "%"#{oauthClientDetailsWithRoleDTO.customName}"%"
+        </if>
+        <if test="oauthClientDetailsWithRoleDTO.roleName != null and oauthClientDetailsWithRoleDTO.roleName != ''">
+            AND rc.role_name LIKE "%"#{oauthClientDetailsWithRoleDTO.roleName}"%"
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,121 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Diamond GIA统一认证</title>
+    <meta charset="UTF-8"/>
+    <link rel="shortcut icon"  href="../static/images/title.jpg" th:href="@{images/title.jpg}">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
+    <!-- 弹出层样式 -->
+    <link rel="stylesheet" href="js/layer/demo.css" th:href="@{js/layer/demo.css}"/>
+    <link href="https://cdn.bootcss.com/bootstrap-validator/0.5.2/css/bootstrapValidator.min.css" rel="stylesheet">
+
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!-- 弹出层警告信息 -->
+    <script  src="js/layer/layer.js" th:src="@{/js/layer/layer.js}"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 表单校验 js-->
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.2/js/bootstrapValidator.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.2/js/language/zh_CN.min.js"></script>
+   <!-- 表单序列化工具 js-->
+    <script src="js/util.js" th:src="@{js/util.js}"></script>
+</head>
+<body class="horizontal-menu-page">
+<section>
+    <nav class="navbar navbar-dark box-shadow" role="navigation">
+        <div th:fragment="header">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar navbar-toggle navbar-default" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="http://www.hoioy.com/" class="navbar-brand d-flex align-items-center">
+                                <strong>hoioy.com</strong>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img alt=""  style="width: 40px; height: 40px;" src="images/default.jpg" />
+                                <span sec:authentication="name">您好</span><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="changePassword">修改密码</a></li>
+                                <li><a href="admin">应用管理</a></li>
+                                <li><a th:href="@{oauth/exit}" >退出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--body wrapper start-->
+    <div class="wrapper"  id="right">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h2 class="jumbotron-heading">Diamond GIA统一认证平台</h2>
+                <p class="lead text-muted">基于Spring Boot,Spring Security,Spring Security OAuth2的统一认证服务器</p>
+                <p>
+                    <a  target="_blank" href="http://doc.gia.diamond.hoioy.com" class="btn btn-primary my-2">文档地址</a>
+                    <a  target="_blank" href="https://github.com/hoioy/diamond-gia" class="btn btn-secondary my-2">源码地址</a>
+                </p>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row" id ="content">
+                    <div class="col-sm-6 col-md-4 col-lg-3" th:each="client:${clients}">
+                        <div class="well" style="background-color: white" th:title="${client.customSubName}">
+                            <center style="height: 200px;">
+<!--                                <a th:href="${#strings.arraySplit(client.webServerRedirectUri, ',')[0]}" th:title="${client.customSubName}"-->
+                                <a th:href="${client.mainHost}" th:title="${client.customSubName}"
+                                   target="_blank">
+                                    <img class="lazy" th:src="${client.icon}" alt="应用图标，可使用admin账户登录设置"
+                                         onerror="this.src='http://tech.hoioy.com/upload/9f569dfd274745e4a12ffcf4c5983e2e.jpg';
+                                     this.onerror=null" width="100" height="100" />
+                                </a>
+                                <h3>
+<!--                                    <a th:href="${#strings.arraySplit(client.webServerRedirectUri, ',')[0]}"-->
+                                    <a th:href="${client.mainHost}"
+                                       th:title="${client.customSubName}" target="_blank">
+                                        <span th:text="${client.customName}"  style="overflow:hidden; text-overflow:ellipsis;
+                                    display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:1; "></span>
+                                    </a>
+                                </h3>
+                                <p th:text="${#strings.isEmpty(client.customSubName)?client.customName:client.customSubName}"
+                                   style="overflow:hidden; text-overflow:ellipsis; height:60px;
+                                    display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; " />
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--body wrapper end-->
+    <!--footer section start-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">v2.3.9</div></br>
+            <div class="text-center">2018-2021 @hoioy.com 版权所有</div></br>
+        </div>
+    </footer>
+    <!--footer section end-->
+</section>
+</body>
+</html>

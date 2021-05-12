@@ -1,0 +1,56 @@
+server:
+  port: 9999
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  devtools:
+    restart:
+      enabled: true  #热部署
+  messages:       #配置引用国际化文件
+    cache-duration: -1
+    encoding: UTF-8
+  jackson:   #解决时区相差8问题,解决日期对象映射字符串的问题
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    format: # 决日期对象映射字符串的问题
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd HH:mm:ss
+      time: HH:mm:ss
+  main:
+    allow-bean-definition-overriding: true
+  cache:
+    type: redis
+
+logging:
+  level:
+    org:
+      springframework:
+        security: info
+
+diamond:
+  default-authority-list: ROLE_USER,cc377e1b32e74e71953ddcd595d5498b #新用户默认权限，可以是角色。此处同时写roleName和roleID,因为分布式系统有的根据name有的根据id鉴权
+  provider:  #LDAP|DB|HTTP,如果同时支持多个，则用逗号隔开,如LDAP,DB
+  ldap: #ldap配置，如果没有则provider中不要增加LDAP
+    url: ""
+    admin-name: ""
+    admin-password: ""
+    base-dn: ""
+  db:  #当tdf.provider中包含DB时，DB的配置
+    driverClassName: "" #"com.mysql.jdbc.Driver"
+    dbUrl: "" #"jdbc:mysql://localhost:3306/wwj"
+    username: "" #"root"
+    password: "" # "root"
+    tableName: "" #"other_user_info" #用户表名称
+    nameField: "" #"login_name"
+    credentialField: "" #"password"
+  http: #当tdf.provider中包含HTTP时，HTTP接口的配置
+    url: "" #"http://localhost:8080"
+    nameField: "" #"login_name"
+    credentialField: "" #"password"
+
+
+

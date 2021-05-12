@@ -1,0 +1,90 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Diamond GIA统一认证</title>
+  <meta charset="UTF-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon"  href="../static/images/title.jpg" th:href="@{images/title.jpg}">
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="navbar navbar-dark box-shadow"></div>
+</header>
+
+<div class="main-content">
+  <section class="text-center">
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4 col-md-offset-4">
+          <div class="panel panel-default">
+            <header class="panel-heading">Diamond GIA统一认证登录</header>
+
+            <form id="confirmationForm" name="confirmationForm" th:action="@{/oauth/authorize}" method="post">
+              <div class="panel-body">
+                <p>
+                  该网页由“<span th:text="${client.customName}" />”开发,
+                  向其提供以下权限即可继续操作
+                </p>
+                <h5>获得你的个人信息（名称，邮箱等）</h5>
+
+                <!--<div th:each="scope : ${scopes}">-->
+                  <!--<input th:name="${scope.key}" value="true" hidden="hidden"></input>-->
+                <!--</div>-->
+
+              </div>
+              <div class="panel-footer">
+                <input name="user_oauth_approval" value="true" type="hidden" />
+                <input type="hidden" th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" th:if="${_csrf}" />
+                <input id="btn_authorize" name='authorize' value='确认登录'
+                       type='submit' class="btn btn-block btn-lg btn-success" />
+              </div>
+            </form>
+
+            <form id="denialForm" name="denialForm" th:action="@{/oauth/authorize}" method="post">
+              <div class="panel-footer">
+                <input name="user_oauth_approval" value="false" type="hidden" />
+                <input type="hidden" th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" th:if="${_csrf}" />
+                <input value='取消' class="btn btn-block btn-lg btn-danger" type="submit"/>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <div class="text-center">copyright 2021 hoioy.com 版权所有</div>
+    </div>
+  </nav>
+
+
+</div>
+
+
+
+</body>
+
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var scopes=/*[[${scopes}]]*/;
+  // function cancelfun() {
+  //   $.each(scopes,function(key,value){
+  //     $("input[name='"+key+"']").attr('value',false);
+  //   })
+  // };
+
+  /*]]>*/
+</script>
+</html>

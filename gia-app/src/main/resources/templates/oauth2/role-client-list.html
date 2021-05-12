@@ -1,0 +1,249 @@
+<!-- 查询面板  start -->
+<form class="form-horizontal" role="form" id="deptUserForm">
+    <div class="row" id="deptUserList-search">
+        <div class="modal fade" id="ModalDeptUser" tabindex="1" role="dialog" aria-labelledby="myModalLabelDeptUser"
+             aria-hidden="true">
+        </div>
+        <div class="col-md-12">
+            <div class="panel">
+                <header class="panel-heading">
+                    查询条件
+                </header>
+                <div class="panel-body">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">应用ID</label>
+                            <div class="col-md-8">
+                                <input name="clientId" type="text" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="text-center">
+                        <input type="button" id="btn_searcher" value="查询" class="btn btn-primary"></input>
+                        <input type="reset" id="btn_reset" class="btn btn-reset"></input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- 查询面板  end -->
+<!-- 信息面板  start -->
+<div class="row" id="deptUserList-div">
+    <div class="col-md-12">
+        <div class="panel">
+            <header class="panel-heading">
+                应用列表
+            </header>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div id="toolbar" class="btn-group">
+                        <button id="add" type="button" class="btn btn-default">
+                            <span class="fa fa-plus" aria-hidden="true"></span>分配应用
+                        </button>
+                    </div>
+                    <table id="deptUserListTable"></table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 信息面板  end -->
+<!-- 优先加载跳转返回数据  start -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+<!-- 优先加载跳转返回数据  end -->
+<!-- 加载数据  函数方法 start -->
+<script th:inline="javascript">
+    var roleNam;
+    $(function () {
+        var roleName = [[${roleName}]];
+        if (roleName == null) {
+            roleName = "";
+        }
+        roleNam=roleName
+
+        //数据加载
+        $('#deptUserListTable').bootstrapTable({
+            url: 'oauth2/role-client-list',
+            method: 'post',                      //请求方式（*）
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded",
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            undefinedText: "",					//当数据为 undefined 时显示的字符
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            pageSize: 5,  						//每页显示的记录数
+            pageNumber: 1, 						//当前第几页
+            pageList: [5, 10, 15],  	//记录数可选列表
+            sortable: false,                    //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            //查询参数,每次调用是会带上这个参数，可自定义
+            queryParams: queryParams,
+            search: false,                      //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 4,             //最少允许的列数
+            responseHandler: function (res) {
+                if (res) {
+                    return {
+                        "rows": res.data.list,
+                        "total": res.data.total
+                    };
+
+                } else {
+                    return {
+                        "rows": [],
+                        "total": 0
+                    };
+                }
+            },
+            //clickToSelect: true,              //是否启用点击选中行
+            //height: 600,                      //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                  //是否显示父子表
+            columns: [{
+                field: 'clientId',
+                title: '应用ID'
+            }, {
+                field: 'webServerRedirectUri',
+                title: '重定向地址'
+            }, {
+                title: '操    作',
+                field: 'id',
+                formatter: function (value, row, index) {
+                    return '<a href ="#" title="移除">' +
+                            '<span class="fa fa-trash-o"   onclick=removeClientFromRole(\'' + row.clientId + '\')></span>' +
+                            '</a>';
+                }
+            }]
+        });
+
+        //校验
+        $('#deptUserForm').bootstrapValidator({
+            //		        live: 'disabled',
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                clientId: {
+                    validators: {
+                        regexp: {
+                            regexp: /^[_a-zA-Z0-9-]+$/,
+                            message: '不能输入中文和特殊字符'
+                        }
+                    }
+                }
+            }
+        });
+
+        //重置表单所有验证规则
+        $("#btn_reset").click(function () {
+            $('#deptUserForm').data("bootstrapValidator").resetForm();
+        });
+
+        //搜索
+        $("#btn_searcher").click(function () {
+            var flag = $('#deptUserForm').bootstrapValidator(
+                    'validate').data('bootstrapValidator')
+                    .isValid();
+            if (flag) {
+                refreshFunction();
+            }
+
+        });
+
+        //设置查询条件，把分页，查询条件，排序等信息拼接成一个models字符串对象传递至后台
+        function queryParams(params) {
+            var search = {};
+            $.each($("#deptUserForm").serializeArray(), function (i, field) {
+                search[field.name] = field.value;
+            });
+
+            var json = {
+                'page': this.pageNumber,
+                'pageSize': this.pageSize,
+                "roleName": roleName,
+                'filters': [{
+                        field: "clientId",
+                        value: search.clientId
+                 }],
+                'sort': [],
+                'isSelectAll': false
+            };
+            var baseData = JSON.stringify(json);
+            var param = {
+                models: baseData
+            };
+
+            return param;
+        }
+
+        //刷新
+        function refreshFunction() {
+            $('#deptUserListTable').bootstrapTable('refresh');
+        }
+
+        //分配角色应用
+        $("#add").click(function () {
+            if ("" != roleName) {
+                $('#ModalDeptUser').modal('show');
+                $('#ModalDeptUser').load('oauth2/role-client-dialog?roleName=' + roleName);
+            } else {
+                layer.msg("请选择角色", {icon: 2});
+            }
+        });
+
+
+
+    });
+    //从角色中移除该应用,实际调用全量删除后，全量添加
+    function removeClientFromRole(id) {
+        if ("" != roleNam) {
+            layer.confirm('你确定要移除选中项吗？', {
+                btn: ['确定'] //按钮
+            }, function () {
+                $.ajax({
+                    url: 'oauth2/role-client-save',
+                    data: {
+                        clientIds: "",
+                        preClientIds: id,
+                        roleName: roleNam
+                    },
+                    type: 'post',
+                    success: function (data, textStatus, jqXHR) {
+                        debugger
+                        if (data.code==200){
+                            layer.msg('移除应用成功', {icon: 1});
+                            // refreshFunction();
+                            $('#deptUserListTable').bootstrapTable('refresh');
+                        }
+                        else {
+                            layer.msg('移除失败', {icon: 2});
+                            refreshFunction();
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+            });
+        } else {
+            alert("请选择角色");
+        }
+    }
+</script>
+<!-- 加载数据  函数方法 end -->

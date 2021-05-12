@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Insert title here</title>
+</head>
+<body>
+<div th:fragment="include">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
+    <!-- 表单校验 样式-->
+    <link href="https://cdn.bootcss.com/bootstrap-validator/0.5.2/css/bootstrapValidator.min.css" rel="stylesheet">
+    <!--bootstrap-treeview -->
+    <!--可以替换为cdn，控制台报错，但是不影响功能，暂时保留-->
+    <link rel="stylesheet" href="js/bootstrap-treeview/bootstrap-treeview.min.css" th:href="@{js/bootstrap-treeview/bootstrap-treeview.min.css}"/>
+    <!--<link href="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.css" rel="stylesheet">-->
+    <!--fileinput-->
+    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.9/css/fileinput.min.css" rel="stylesheet">
+    <!--font-->
+    <link href="https://cdn.bootcss.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!--bootstrap-dialog start-->
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-dialog/bootstrap-dialog.min.css"/>
+    <!--pickers plugins-->
+    <link rel="stylesheet" type="text/css" th:href="@{js/bootstrap-datetimepicker/css/datetimepicker-custom.css}"/>
+    <!-- 弹出层样式 -->
+    <link rel="stylesheet" href="js/layer/demo.css" th:href="@{js/layer/demo.css}"/>
+
+    <!--custom-->
+    <link href="css/style.css" rel="stylesheet" th:href="@{css/style.css}"/>
+    <link href="css/style-responsive.css" rel="stylesheet" th:href="@{css/style-responsive.css}"/>
+</div>
+
+<div th:fragment="js">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+    <!-- 表单校验 js-->
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.2/js/bootstrapValidator.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.2/js/language/zh_CN.min.js"></script>
+    <!--bootstrap-treeview -->
+    <!--可以替换为cdn，控制台报错，但是不影响功能，暂时保留-->
+    <script th:src="@{js/bootstrap-treeview/bootstrap-treeview.js}"></script>
+    <!--<script src="https://cdn.bootcss.com/bootstrap-treeview/1.2.0/bootstrap-treeview.min.js"></script>-->
+    <!--fileinput-->
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.9/js/fileinput.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.9/js/locales/zh.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.9/themes/fa/theme.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.9/js/plugins/sortable.min.js"></script>
+
+
+    <script src="js/jquery-ui-1.9.2.custom.min.js" th:src="@{js/jquery-ui-1.9.2.custom.min.js}"></script>
+    <script src="https://cdn.bootcss.com/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
+    <script src="https://cdn.bootcss.com/modernizr/2.6.2/modernizr.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.nicescroll/3.5.1/jquery.nicescroll.min.js"></script>
+
+    <!-- 页面渲染JS -->
+    <script src="https://cdn.bootcss.com/handlebars.js/1.0.0.beta6/handlebars.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.6.2pre/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.1.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!--bootstrap-dialog-->
+    <script type="text/javascript" src="js/bootstrap-dialog/bootstrap-dialog.min.js"></script>
+    <!--pickers plugins-->
+    <script th:src="@{js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js}"></script>
+    <script th:src="@{js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
+
+    <!-- 弹出层警告信息 -->
+    <script src="js/layer/layer.js" th:src="@{/js/layer/layer.js}"></script>
+    <!--custom-->
+    <script src="js/scripts.js" th:src="@{/js/scripts.js}"></script>
+    <script src="js/util.js" th:src="@{js/util.js}"></script>
+    <script src="js/tdf-boostrap-tree.js" th:src="@{js/tdf-boostrap-tree.js}"></script>
+</div>
+</body>
+</html>

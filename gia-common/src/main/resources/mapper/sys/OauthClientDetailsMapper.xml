@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hoioy.diamond.oauth2.mapper.OauthClientDetailsMapper">
+    
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hoioy.diamond.oauth2.domain.OauthClientDetails">
+        <result column="id" property="id"/>
+        <result column="flag" property="flag"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_date" property="createdDate"/>
+        <result column="modified_by" property="modifiedBy"/>
+        <result column="modified_date" property="modifiedDate"/>
+        <result column="remark" property="remark"/>
+
+        <result column="client_id" property="clientId"/>
+        <result column="resource_ids" property="resourceIds"/>
+        <result column="client_secret" property="clientSecret"/>
+        <result column="scope" property="scope"/>
+        
+        <result column="authorized_grant_types" property="authorizedGrantTypes"/>
+        <result column="web_server_redirect_uri" property="webServerRedirectUri"/>
+        <result column="authorities" property="authorities"/>
+        <result column="access_token_validity" property="accessTokenValidity"/>
+        
+        <result column="refresh_token_validity" property="refreshTokenValidity"/>
+        <result column="additional_information" property="additionalInformation"/>
+        <result column="autoapprove" property="autoapprove"/>
+        <result column="custom_name" property="customName"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,flag,created_by, created_date, modified_by, modified_date, remark, 
+        client_id, resource_ids, client_secret,scope,
+        authorized_grant_types, web_server_redirect_uri, authorities,access_token_validity,
+        refresh_token_validity, additional_information, autoapprove,custom_name,
+
+        client_id, role_name
+    </sql>
+
+    <select id="selectPage" resultType="com.hoioy.diamond.oauth2.domain.OauthClientDetails">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        oauth_client_details 
+        where
+        flag=1
+        <if test="oauthClientDetails.createdBy != null and oauthClientDetails.createdBy != ''">
+            AND created_by LIKE "%"#{oauthClientDetails.createdBy}"%"
+        </if>
+        <if test="oauthClientDetails.createdDate != null ">
+            AND created_date = #{oauthClientDetails.createdDate}
+        </if>
+        <if test="oauthClientDetails.modifiedBy != null and oauthClientDetails.modifiedBy != ''">
+            AND modified_by LIKE "%"#{oauthClientDetails.modifiedBy}"%"
+        </if>
+        <if test="oauthClientDetails.modifiedDate != null ">
+            AND modified_date = #{oauthClientDetails.modifiedDate}
+        </if>
+        <if test="oauthClientDetails.remark != null and oauthClientDetails.remark != ''">
+            AND remark LIKE "%"#{oauthClientDetails.remark}"%"
+        </if>
+
+        <if test="oauthClientDetails.clientId != null and oauthClientDetails.clientId != ''">
+            AND client_id LIKE "%"#{oauthClientDetails.clientId}"%"
+        </if>
+        <if test="oauthClientDetails.authorizedGrantTypes != null and oauthClientDetails.authorizedGrantTypes != ''">
+            AND authorized_grant_types = #{oauthClientDetails.authorizedGrantTypes}
+        </if>
+        <if test="oauthClientDetails.customName != null and oauthClientDetails.customName != ''">
+            AND custom_name LIKE "%"#{oauthClientDetails.customName}"%"
+        </if>
+    </select>
+
+    <select id="findByClientId" resultType="com.hoioy.diamond.oauth2.domain.OauthClientDetails">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        oauth_client_details
+        where
+        flag=1
+        and
+        client_id = #{clientId}
+    </select>
+
+    <select id="findAllByClientIdIn" resultType="com.hoioy.diamond.oauth2.domain.OauthClientDetails">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        oauth_client_details
+        where
+        flag=1
+        and
+        client_id
+        in
+        <foreach collection="clientIds" item="clientId" index="index" open="(" close=")" separator=",">
+            #{clientId}
+        </foreach>
+    </select>
+</mapper>

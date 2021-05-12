@@ -1,0 +1,68 @@
+<div class="sticky-header">
+	<div class="mail-box">
+		<aside class="mail-nav mail-nav-bg-color">
+			<div class="mail-nav-body">
+				<div  class="panel">
+					<div class="panel-body">
+						 <div id="roleTree"></div>
+					</div>
+				</div>
+			</div>
+		</aside>
+		<!-- 用户列表 -->
+		<div class="col-lg-12" id="section-mail-list"></div>
+	</div>
+</div>
+<script th:inline="javascript">  
+/*<![CDATA[*/ 
+	$(function () {
+		//加载机构树  -->start
+        $.ajax({
+            type: "post",
+            url: "sys/role-list-all",
+            dataType: "json",
+            success: function (result) {
+                $('#roleTree').treeview({
+                    data: result.data,         // 数据源
+                    //showCheckbox: true,   //是否显示复选框
+                    highlightSelected: true,    //是否高亮选中
+                    color: "#000000",
+                    backColor: "#FFFFFF",
+                    //nodeIcon: 'glyphicon glyphicon-user',    //节点上的图标
+                    //nodeIcon: 'glyphicon glyphicon-globe',
+                    emptyIcon: '',    //没有子节点的节点图标
+                    multiSelect: false,    //多选
+                    onNodeChecked: function (event,data) {
+                    	toNodeChecked(data.text);
+                    },
+                    onNodeSelected: function (event, data) {
+                       toNodeSelected(data.text)
+                    }
+                });
+            	$('#roleTree').treeview('uncollapseAll', { silent: true });
+            },
+            error: function () {
+                alert("树形结构加载失败！")
+            }
+        });
+		//加载机构树  -->end
+		//加载用户  -->start    
+		var roleName = "";
+		$('#section-mail-list').load('oauth2/role-client-list?roleName='+roleName);
+		//加载用户  -->end    
+        
+    });
+    //点击事件
+	function toNodeChecked(roleName){
+		$('#section-mail-list').load('oauth2/role-client-list?roleName='+roleName);
+		 
+	}
+	//选择事件
+	function toNodeSelected(roleName){
+		$('#section-mail-list').load('oauth2/role-client-list?roleName='+roleName);
+		 
+	}	
+	
+/*]]>*/  
+</script>	
+ 

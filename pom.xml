@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>diamond-gia</artifactId>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>com.hoioy</groupId>
+        <artifactId>diamond-bom</artifactId>
+        <version>1.0.1</version>
+    </parent>
+
+    <description>diamond 统一认证</description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>hoioy</name>
+        <url>https://github.com/hoioy</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>andyzhaozhao</name>
+            <email>andy_zhaozhao@hotmail.com</email>
+        </developer>
+        <developer>
+            <name>chenzhe</name>
+            <url>https://github.com/orgs/hoioy/people/ChenZheOnePiece</url>
+        </developer>
+        <developer>
+            <name>zhoujialiang</name>
+            <url>https://github.com/orgs/hoioy/people/ouyangxin007</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/hoioy/diamond-gia</url>
+        <connection>https://github.com/hoioy/diamond-gia.git</connection>
+        <developerConnection>https://github.com/hoioy</developerConnection>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <modules>
+        <module>gia-app</module>
+        <module>gia-common</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.hoioy</groupId>
+                <artifactId>gia-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <!--source-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--javadoc-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                    <charset>UTF-8</charset>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- gpg plugin,用于签名认证 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+

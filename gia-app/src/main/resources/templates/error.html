@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error</title>
+    <meta charset="UTF-8"></meta>
+    <link rel="shortcut icon"  href="../static/images/title.jpg" th:href="@{images/title.jpg}">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <section>
+        <nav class="navbar navbar-dark box-shadow" role="navigation">
+            <div th:fragment="header">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a th:href="@{/}" class="navbar-brand d-flex align-items-center"> <strong>返回主页</strong>
+                            </a>
+                            </li>
+                            <li>
+                                <a th:href="@{oauth/exit}" class="navbar-brand d-flex align-items-center"> <strong>退出</strong>
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <h1 th:text="${title}">Title</h1>
+
+    <div>
+        There was an unexpected error (type=<span th:text="${error}">Bad</span>, status=<span
+            th:text="${status}">500</span>).
+    </div>
+    <div th:text="${message}"></div>
+    <div th:text="${msg}"></div>
+</div>
+</body>
+</html>
