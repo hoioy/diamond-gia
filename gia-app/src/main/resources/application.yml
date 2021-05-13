@@ -32,6 +32,7 @@ logging:
         security: info
 
 diamond:
+  maximumConcurrentUser: 200000
   default-authority-list: ROLE_USER,cc377e1b32e74e71953ddcd595d5498b #新用户默认权限，可以是角色。此处同时写roleName和roleID,因为分布式系统有的根据name有的根据id鉴权
   provider:  #LDAP|DB|HTTP,如果同时支持多个，则用逗号隔开,如LDAP,DB
   ldap: #ldap配置，如果没有则provider中不要增加LDAP

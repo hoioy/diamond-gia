@@ -47,7 +47,7 @@ import java.util.List;
 @EnableAuthorizationServer
 public class AuthorizationServerJWTTokenStoreConfig extends AuthorizationServerConfigurerAdapter {
     //同一用户最多允许同时登录个数,自定义配置,默认20000
-    @Value("${base.oauth2.server.maximumConcurrentUser:20000}")
+    @Value("${diamond.maximumConcurrentUser:20000}")
     private Integer maximumConcurrentUser;
 
     private KeyPair keyPair;
