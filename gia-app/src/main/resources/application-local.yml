@@ -29,6 +29,11 @@ spring:
       ddl-auto: none #禁用JPA建表，从而兼容mybatis和jpa。统一使用schema.sql
     show-sql: true
 
+---
+spring:
+  redis:
+    password: 123456
+
 mybatis-plus:
   #扫描多个模块下的mapper.xml
   mapper-locations: classpath*:mapper/**/*.xml

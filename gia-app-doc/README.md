@@ -25,10 +25,10 @@ Diamond GIA可以独立为鉴权中心、统一管理用户、统一认证等与
 - jdk 1.8 +
 - maven 3+
 - lombok IDE插件
+- redis
 
 #### 可选
 - mysql 8
-- redis
 
 ## 运行
 * 方式一:
@@ -42,15 +42,10 @@ Diamond GIA可以独立为鉴权中心、统一管理用户、统一认证等与
     * 数据库路径：~/db/diamondgia
     * 用户名/密码：sa/sa
     
-> 默认是使用caffeine缓存，没有配置Redis，因此可能报错日志：
->   ```
->    o.s.d.r.l.RedisMessageListenerContainer  : Connection failure occurred. Restarting subscription task after 5000 ms
->   ```
->   这个不影响运行。
   
 ## 项目构建
 * GIA是maven工程。
-* 默认使用h2内存数据库和内存 caffeine 缓存，便于快速运行。
+* 默认使用h2内存数据库和内存 redis 缓存，便于快速运行。
 * 生产环境建议切换为Mysql和Redis。
 
 ### 编译

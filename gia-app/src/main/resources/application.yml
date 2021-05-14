@@ -23,7 +23,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   cache:
-    type: caffeine
+    type: redis
 
 logging:
   level:

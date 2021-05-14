@@ -1,5 +1,6 @@
 package com.hoioy.diamond.oauth2.support;
 
+import com.hoioy.diamond.common.util.CommonCacheUtil;
 import com.hoioy.diamond.common.util.CommonRedisUtil;
 import com.hoioy.diamond.oauth2.config.GIAConfig;
 import cn.hutool.core.collection.CollectionUtil;
@@ -22,7 +23,7 @@ import java.util.List;
 public class CustomTokenServices extends DefaultTokenServices {
     private TokenStore tokenStore;
 
-    private CommonRedisUtil redisUtil;
+    private CommonRedisUtil cacheUtil;
 
     //同一用户最多允许同时登录个数
     private Integer maximumConcurrentUser;
@@ -30,7 +31,7 @@ public class CustomTokenServices extends DefaultTokenServices {
     @Override
     public OAuth2AccessToken createAccessToken(OAuth2Authentication authentication) throws AuthenticationException {
         String key = GIAConfig.ACCESS_TOKEN_REDIS + ":" + authentication.getName() + ":*";
-        List<String> tokens = redisUtil.mgetByPattern(key);
+        List<String> tokens = cacheUtil.mgetByPattern(key);
         if (CollectionUtil.isNotEmpty(tokens) && tokens.size() >= maximumConcurrentUser) {
             throw new SessionAuthenticationException("超过同一用户最大并发数：" + maximumConcurrentUser);
         }
@@ -46,7 +47,7 @@ public class CustomTokenServices extends DefaultTokenServices {
         // decide whether to grant the refresh token
         boolean allowRefresh = false;
 
-        List<String> tokens = redisUtil.mgetByPattern(GIAConfig.ACCESS_TOKEN_REDIS + ":"
+        List<String> tokens = cacheUtil.mgetByPattern(GIAConfig.ACCESS_TOKEN_REDIS + ":"
                 + authentication.getName() + ":*");
         if (!CollectionUtils.isEmpty(tokens)) {
             for (String token : tokens) {
@@ -76,8 +77,8 @@ public class CustomTokenServices extends DefaultTokenServices {
         this.maximumConcurrentUser = maximumConcurrentUser;
     }
 
-    public void setRedisUtil(CommonRedisUtil redisUtil) {
-        this.redisUtil = redisUtil;
+    public void setCacheUtil(CommonRedisUtil cacheUtil) {
+        this.cacheUtil = cacheUtil;
     }
 
     @Override

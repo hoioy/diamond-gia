@@ -68,7 +68,7 @@ public class AuthorizationServerJWTTokenStoreConfig extends AuthorizationServerC
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CommonRedisUtil redisUtil;
+    public CommonRedisUtil cacheUtil;
 
     public AuthorizationServerJWTTokenStoreConfig(KeyPair keyPair) throws Exception {
         this.keyPair = keyPair;
@@ -156,7 +156,7 @@ public class AuthorizationServerJWTTokenStoreConfig extends AuthorizationServerC
     @Primary
     public DefaultTokenServices customTokenServices() {
         DefaultTokenServices tokenServices = new CustomTokenServices();
-        ((CustomTokenServices) tokenServices).setRedisUtil(redisUtil);
+        ((CustomTokenServices) tokenServices).setCacheUtil(cacheUtil);
         tokenServices.setTokenStore(customJwtTokenStore());
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setTokenEnhancer(jwtAccessTokenConverter());
@@ -176,6 +176,7 @@ public class AuthorizationServerJWTTokenStoreConfig extends AuthorizationServerC
     public TokenStore customJwtTokenStore() {
         return new CustomJwtTokenStore(jwtAccessTokenConverter());
     }
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();

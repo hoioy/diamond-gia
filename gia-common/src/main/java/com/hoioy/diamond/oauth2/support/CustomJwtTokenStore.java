@@ -1,10 +1,11 @@
 package com.hoioy.diamond.oauth2.support;
 
+import cn.hutool.json.JSONUtil;
+import com.hoioy.diamond.common.util.CommonCacheUtil;
 import com.hoioy.diamond.common.util.CommonRedisUtil;
 import com.hoioy.diamond.oauth2.config.GIAConfig;
 import com.hoioy.diamond.oauth2.dto.OauthTokenDTO;
 import com.hoioy.diamond.oauth2.service.IOauthTokenService;
-import cn.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class CustomJwtTokenStore extends JwtTokenStore {
     private static Logger logger = LoggerFactory.getLogger(CustomJwtTokenStore.class);
 
     @Autowired
-    public CommonRedisUtil redisUtil;
+    public CommonRedisUtil cacheUtil;
 
     @Autowired
     public IOauthTokenService oauthTokenService;
@@ -83,9 +84,9 @@ public class CustomJwtTokenStore extends JwtTokenStore {
         oauthTokenService.create(oauthToken);
 
         //缓存
-        redisUtil.set(key, value);
+        cacheUtil.set(key, value);
         if (oauthToken.getRefreshTokenExpiration() != null) {
-            redisUtil.expireAt(key, new Date(oauthToken.getRefreshTokenExpiration()));
+            cacheUtil.expireAt(key, new Date(oauthToken.getRefreshTokenExpiration()));
         }
 
         logger.debug("storeAccessToken end key={},value={}", key, value);
@@ -97,7 +98,7 @@ public class CustomJwtTokenStore extends JwtTokenStore {
         logger.debug("removeAccessToken");
         String key = GIAConfig.ACCESS_TOKEN_REDIS + ":" + token.getAdditionalInformation().get("sub") + ":" + token.getValue();
         //删除缓存
-        redisUtil.remove(key);
+        cacheUtil.remove(key);
         //删库
         oauthTokenService.removeById((String) token.getAdditionalInformation().get("jti"));
 
